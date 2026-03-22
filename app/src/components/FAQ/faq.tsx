@@ -1,12 +1,23 @@
+import { useEffect } from "react";
+import AOS from "aos";
+
 const Faq = () => {
+  useEffect(() => {
+    AOS.init({
+      duration: 800,
+      once: true,
+      easing: "ease-in-out",
+    });
+  }, []);
+
   return (
     <div style={{ margin: "0 5rem" }}>
-      <h2 className="mb-4">Frequently Asked Questions</h2>
+      <h2 className="mb-4" data-aos="fade-up">Frequently Asked Questions</h2>
 
       <div className="accordion" id="faqAccordion">
 
         {/* ITEM 1 */}
-        <div className="accordion-item">
+        <div className="accordion-item" data-aos="fade-up" data-aos-delay="100">
           <h2 className="accordion-header">
             <button
               className="accordion-button"
@@ -30,7 +41,7 @@ const Faq = () => {
         </div>
 
         {/* ITEM 2 */}
-        <div className="accordion-item">
+        <div className="accordion-item" data-aos="fade-up" data-aos-delay="200">
           <h2 className="accordion-header">
             <button
               className="accordion-button collapsed"
@@ -53,7 +64,7 @@ const Faq = () => {
         </div>
 
         {/* ITEM 3 */}
-        <div className="accordion-item">
+        <div className="accordion-item" data-aos="fade-up" data-aos-delay="300">
           <h2 className="accordion-header">
             <button
               className="accordion-button collapsed"
@@ -76,7 +87,7 @@ const Faq = () => {
         </div>
 
         {/* ITEM 4 */}
-        <div className="accordion-item">
+        <div className="accordion-item" data-aos="fade-up" data-aos-delay="400">
           <h2 className="accordion-header">
             <button
               className="accordion-button collapsed"

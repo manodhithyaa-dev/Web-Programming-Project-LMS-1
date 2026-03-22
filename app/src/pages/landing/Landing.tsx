@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import AOS from "aos";
 import Carousel from "../../components/carousel/Carousel";
 import HighlightsSection from "../../components/featureSection/FeatureSection";
 import Faq from "../../components/FAQ/faq";

@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import styles from "./navbar.module.css";
-import { Search } from "lucide-react";
+import { Search, LayoutDashboard } from "lucide-react";
 import { categories } from "../../utils/data";
 import Signup from "../../pages/signup/Signup";
 import Login from "../../pages/login/Login";
@@ -9,6 +10,7 @@ const Navbar: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
+  const location = useLocation();
 
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -78,9 +80,12 @@ const Navbar: React.FC = () => {
 
         {/* RIGHT */}
         <div className={styles.right}>
-          {/* <a href="#" className={styles.link}>
-            Log In
-          </a> */}
+          {location.pathname !== "/dashboard" && (
+            <Link to="/dashboard" className={styles.link}>
+              <LayoutDashboard size={18} style={{ marginRight: 4 }} />
+              My Learning
+            </Link>
+          )}
 
           <button
             className={styles.joinBtn}

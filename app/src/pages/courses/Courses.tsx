@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { coursesData } from "../../utils/data";
+import AOS from "aos";
 
 const Courses = () => {
   const [filters, setFilters] = useState({
@@ -8,6 +9,14 @@ const Courses = () => {
     level: "",
     rating: "",
   });
+
+  useEffect(() => {
+    AOS.init({
+      duration: 800,
+      once: true,
+      easing: "ease-in-out",
+    });
+  }, []);
 
   const handleChange = (e: any) => {
     setFilters({ ...filters, [e.target.name]: e.target.value });
@@ -25,15 +34,14 @@ const Courses = () => {
     );
   });
 
-  // 🔥 LEVEL COLOR LOGIC
   const getLevelClass = (level: string) => {
     switch (level) {
       case "Beginner":
-        return "bg-success"; // green
+        return "bg-success";
       case "Intermediate":
-        return "bg-warning text-dark"; // yellow/orange
+        return "bg-warning text-dark";
       case "Advanced":
-        return "bg-danger"; // red
+        return "bg-danger";
       default:
         return "bg-secondary";
     }
@@ -42,8 +50,7 @@ const Courses = () => {
   return (
     <div className="container mt-4">
 
-      {/* 🔍 FILTER SECTION */}
-      <div className="row g-3 mb-4">
+      <div className="row g-3 mb-4" data-aos="fade-up">
 
         <div className="col-md-3">
           <input
@@ -116,11 +123,11 @@ const Courses = () => {
         </div>
       </div>
 
-      {/* 🎓 COURSES GRID */}
+      {/* COURSES GRID */}
       <div className="row g-4">
         {filteredCourses.length > 0 ? (
           filteredCourses.map((course, index) => (
-            <div key={index} className="col-lg-3 col-md-6">
+            <div key={index} className="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay={index * 50}>
               <div className="card h-100 shadow-sm position-relative">
 
                 {/* 🔥 LEVEL BADGE */}

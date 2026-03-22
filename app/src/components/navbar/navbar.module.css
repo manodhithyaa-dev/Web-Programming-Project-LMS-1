@@ -109,6 +109,15 @@
   text-decoration: none;
   color: #0056d2;
   font-size: 14px;
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.link:hover {
+  background: #eff6ff;
 }
 
 .joinBtn {

@@ -1,8 +1,18 @@
 import styles from "./footer.module.css";
 import { Facebook, Twitter, Linkedin, Github } from "lucide-react";
 import { footerData } from "../../utils/data"
+import { useEffect } from "react";
+import AOS from "aos";
 
 const Footer = () => {
+  useEffect(() => {
+    AOS.init({
+      duration: 800,
+      once: true,
+      easing: "ease-in-out",
+    });
+  }, []);
+
   return (
     <footer className={styles.footer}>
       <div className={styles.container}>
@@ -10,7 +20,7 @@ const Footer = () => {
         {/* TOP GRID */}
         <div className={styles.grid}>
           {footerData.map((section, index) => (
-            <div key={index}>
+            <div key={index} data-aos="fade-up" data-aos-delay={index * 100}>
               <h5 className={styles.title}>{section.title}</h5>
               <ul className={styles.list}>
                 {section.links.map((link, i) => (

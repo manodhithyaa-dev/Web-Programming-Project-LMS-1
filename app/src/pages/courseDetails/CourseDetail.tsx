@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const course = {
   title: "React Bootcamp",
@@ -44,6 +45,7 @@ const course = {
 const CourseDetail = () => {
   const [wishlist, setWishlist] = useState(false);
   const [previewVideo, setPreviewVideo] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   return (
     <div className="container mt-4">
@@ -147,7 +149,7 @@ const CourseDetail = () => {
                 {wishlist ? "❤️ Wishlisted" : "♡ Add to Wishlist"}
               </button>
 
-              <button className="btn btn-success w-100 mb-2">
+              <button className="btn btn-success w-100 mb-2" onClick={() => navigate("/course/learn/101")}>
                 Enroll Now
               </button>
 
