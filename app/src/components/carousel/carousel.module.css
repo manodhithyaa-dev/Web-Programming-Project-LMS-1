@@ -1,0 +1,95 @@
+.carousel {
+  position: relative;
+  padding: 20px;
+  padding-left: 5rem;
+  padding-right: 5rem;
+}
+
+/* slide wrapper */
+.slide {
+  display: flex;
+  gap: 20px;
+}
+
+/* OFFER CARD */
+.offerCard {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #eef2f7;
+  border-radius: 20px;
+  padding: 20px;
+  min-height: 220px;
+  overflow: hidden;
+}
+
+/* text */
+.text {
+  max-width: 55%;
+}
+
+.badge {
+  font-size: 12px;
+  color: #0056d2;
+  font-weight: bold;
+}
+
+.btn {
+  background: #0056d2;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+/* image */
+.imageContainer img {
+  width: 250px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* 🔥 ARROW FIX (circle background) */
+.control {
+  width: 50px;
+  height: 50px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* center icon inside */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(1); /* makes arrow white */
+}
+
+/* 🔥 DOTS */
+.indicators {
+  bottom: -10px;
+}
+
+.indicators button {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #bbb;
+  border: none;
+  margin: 0 5px;
+}
+
+.indicators .active {
+  background-color: #0056d2;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .slide {
+    flex-direction: column;
+  }
+}
