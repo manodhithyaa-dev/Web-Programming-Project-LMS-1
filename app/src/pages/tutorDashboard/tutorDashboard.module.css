@@ -1,0 +1,204 @@
+/* CONTAINER */
+.container {
+  min-height: calc(100vh - 200px);
+  padding: 24px;
+  background: #f9fafb;
+}
+
+/* TITLE */
+.title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 16px;
+}
+
+/* TABS (Bootstrap is used, but spacing here) */
+.tabs {
+  margin-bottom: 16px;
+}
+
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* CARD */
+.card {
+  background: #fff;
+  padding: 18px;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+
+.card h4 {
+  margin: 0 0 6px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.card p {
+  margin: 0 0 10px 0;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* MODAL OVERLAY */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 999;
+
+  /* prevent background scroll */
+  overflow: hidden;
+}
+
+/* EDITOR PANEL */
+.editor {
+  width: 100%;
+  max-width: 720px;
+
+  background: #fff;
+  border-radius: 12px;
+
+  /* FIXED HEIGHT */
+  height: 85vh;
+  max-height: 85vh;
+
+  padding: 24px;
+
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+
+  /* SCROLL INSIDE */
+  overflow-y: auto;
+
+  animation: fadeIn 0.3s ease;
+  scroll-behavior: smooth;
+}
+
+/* INPUTS */
+.editor input,
+.editor textarea {
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.editor textarea {
+  resize: none;
+  min-height: 80px;
+}
+
+.editor input:focus,
+.editor textarea:focus {
+  outline: none;
+  border-color: #0056d2;
+  box-shadow: 0 0 0 2px rgba(0, 86, 210, 0.15);
+}
+
+/* SECTION BLOCK */
+.section {
+  background: #f9fafb;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+
+.section h5 {
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #1f2937;
+}
+
+/* LESSON */
+.lesson {
+  background: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+/* VIDEO */
+iframe {
+  margin-top: 8px;
+  border-radius: 8px;
+  border: none;
+}
+
+/* VALIDATION BOX */
+.validation {
+  margin-top: 16px;
+  padding: 12px;
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: 8px;
+}
+
+.validation h5 {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.validation p {
+  font-size: 13px;
+  color: #b45309;
+  margin: 4px 0;
+}
+
+/* CUSTOM SCROLLBAR */
+.editor::-webkit-scrollbar {
+  width: 6px;
+}
+
+.editor::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+.editor::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* ANIMATION */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-15px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .editor {
+    width: 90%;
+    height: 90vh;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
