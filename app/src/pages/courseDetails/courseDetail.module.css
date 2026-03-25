@@ -1,0 +1,368 @@
+.mainRow {
+  display: flex;
+  gap: 32px;
+  padding: 24px 0;
+}
+
+.leftCol {
+  flex: 1;
+}
+
+.rightCol {
+  width: 380px;
+  flex-shrink: 0;
+}
+
+.courseHeader {
+  margin-bottom: 16px;
+}
+
+.levelBadge {
+  display: inline-block;
+  padding: 4px 12px;
+  background: #dcfce7;
+  color: #16a34a;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 8px 0;
+  line-height: 1.2;
+}
+
+.author {
+  font-size: 16px;
+  color: #0056d2;
+  margin: 0;
+}
+
+.metaRow {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #374151;
+}
+
+.description {
+  margin-bottom: 32px;
+}
+
+.description h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 12px 0;
+}
+
+.description p {
+  font-size: 15px;
+  color: #6b7280;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.syllabus {
+  margin-bottom: 24px;
+}
+
+.syllabus h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 8px 0;
+}
+
+.syllabusSummary {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0 0 16px 0;
+}
+
+.accordion {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.accordionItem {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.accordionItem:last-child {
+  border-bottom: none;
+}
+
+.accordionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: #f9fafb;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.accordionHeader:hover {
+  background: #f3f4f6;
+}
+
+.accordionTitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+  color: #1f2937;
+}
+
+.chevron {
+  transition: transform 0.2s;
+  color: #6b7280;
+}
+
+.chevron.rotated {
+  transform: rotate(180deg);
+}
+
+.lessonCount {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.accordionBody {
+  background: #fff;
+}
+
+.lessonItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 20px 14px 44px;
+  border-bottom: 1px solid #f3f4f6;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.lessonItem:last-child {
+  border-bottom: none;
+}
+
+.lessonItem.previewLesson {
+  cursor: pointer;
+  opacity: 1;
+}
+
+.lessonItem.previewLesson:hover {
+  background: #eff6ff;
+}
+
+.lessonLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: #374151;
+}
+
+.previewBadge {
+  font-size: 11px;
+  padding: 3px 8px;
+  background: #eff6ff;
+  color: #0056d2;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.card {
+  position: sticky;
+  top: 100px;
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.cardImage {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.playOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.playOverlay:hover {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.cardBody {
+  padding: 24px;
+}
+
+.price {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 16px;
+}
+
+.currency {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.amount {
+  font-size: 36px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.enrollBtn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.enrollBtnPrimary {
+  background: #0056d2;
+  color: #fff;
+  border: none;
+}
+
+.enrollBtnPrimary:hover {
+  background: #0044a8;
+}
+
+.wishlistBtn {
+  background: #fff;
+  color: #374151;
+  border: 1px solid #d1d5db;
+}
+
+.wishlistBtn:hover {
+  border-color: #0056d2;
+  color: #0056d2;
+}
+
+.wishlistActive {
+  background: #fef2f2;
+  color: #ef4444;
+  border: 1px solid #fecaca;
+}
+
+.divider {
+  height: 1px;
+  background: #e5e7eb;
+  margin: 20px 0;
+}
+
+.features {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.featureItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  color: #374151;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modalContent {
+  position: relative;
+  background: #000;
+  border-radius: 12px;
+  overflow: hidden;
+  max-width: 900px;
+  width: 90%;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeBtn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+@media (max-width: 992px) {
+  .mainRow {
+    flex-direction: column-reverse;
+  }
+
+  .rightCol {
+    width: 100%;
+  }
+
+  .card {
+    position: static;
+  }
+}
