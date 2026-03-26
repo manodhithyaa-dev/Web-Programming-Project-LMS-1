@@ -18,8 +18,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/course" element={<Courses />} />
-          <Route path="/course/101" element={<CourseDetail />} />
-          <Route path="/course/learn/:courseId" element={<CourseContent />} />
+          <Route path="/course/:id" element={<CourseDetail />} />
+          <Route path="/course/learn/:id" element={<CourseContent />} />
           <Route path="/dashboard" element={<StudentDashboard />} />
           <Route path="/tutor-dashboard" element={<TutorDashboard />} />
         </Routes>

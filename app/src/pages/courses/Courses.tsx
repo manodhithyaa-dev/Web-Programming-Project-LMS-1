@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
-import { coursesData } from "../../utils/data";
+import axios from "axios";
 import AOS from "aos";
+import { Navigate } from "react-router-dom";
 
 const Courses = () => {
+  const [courses, setCourses] = useState<any[]>([]);
   const [filters, setFilters] = useState({
     search: "",
     author: "",
@@ -16,18 +18,30 @@ const Courses = () => {
       once: true,
       easing: "ease-in-out",
     });
+
+    fetchCourses();
   }, []);
+
+  const fetchCourses = async () => {
+    try {
+      const res = await axios.get("http://localhost:5000/courses");
+      setCourses(res.data);
+      console.log(res.data)
+    } catch (err) {
+      console.error("Error fetching courses:", err);
+    }
+  };
 
   const handleChange = (e: any) => {
     setFilters({ ...filters, [e.target.name]: e.target.value });
   };
 
-  const authors = [...new Set(coursesData.map((c) => c.author))];
-  const levels = [...new Set(coursesData.map((c) => c.level))];
+  const authors = [...new Set(courses.map((c) => c.author))];
+  const levels = [...new Set(courses.map((c) => c.level))];
 
-  const filteredCourses = coursesData.filter((course) => {
+  const filteredCourses = courses.filter((course) => {
     return (
-      course.title.toLowerCase().includes(filters.search.toLowerCase()) &&
+      course.course_name.toLowerCase().includes(filters.search.toLowerCase()) &&
       (filters.author ? course.author === filters.author : true) &&
       (filters.level ? course.level === filters.level : true) &&
       (filters.rating ? course.rating >= Number(filters.rating) : true)
@@ -50,6 +64,7 @@ const Courses = () => {
   return (
     <div className="container mt-4">
 
+      {/* FILTERS */}
       <div className="row g-3 mb-4" data-aos="fade-up">
 
         <div className="col-md-3">
@@ -127,10 +142,14 @@ const Courses = () => {
       <div className="row g-4">
         {filteredCourses.length > 0 ? (
           filteredCourses.map((course, index) => (
-            <div key={index} className="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay={index * 50}>
-              <div className="card h-100 shadow-sm position-relative">
+            <div
+              key={course.course_id}
+              className="col-lg-3 col-md-6"
+              data-aos="fade-up"
+              data-aos-delay={index * 50}
+            >
+              <div className="card h-100 shadow-sm position-relative" onClick={() => {window.location.href="/course/"+course.course_id}}>
 
-                {/* 🔥 LEVEL BADGE */}
                 <span
                   className={`badge ${getLevelClass(course.level)} position-absolute`}
                   style={{ top: "10px", right: "10px" }}
@@ -145,7 +164,7 @@ const Courses = () => {
                 />
 
                 <div className="card-body">
-                  <h6 className="fw-bold">{course.title}</h6>
+                  <h6 className="fw-bold">{course.course_name}</h6>
                   <p className="mb-1 text-muted">By {course.author}</p>
 
                   <div className="d-flex justify-content-between">

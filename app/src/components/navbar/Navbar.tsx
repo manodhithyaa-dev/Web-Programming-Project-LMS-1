@@ -10,9 +10,18 @@ const Navbar: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
   const location = useLocation();
 
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (localStorage.getItem("isLogin")) {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
+  })
 
   // CLOSE dropdown on outside click
   useEffect(() => {
@@ -80,7 +89,7 @@ const Navbar: React.FC = () => {
 
         {/* RIGHT */}
         <div className={styles.right}>
-          {location.pathname !== "/dashboard" && (
+          {/* {location.pathname !== "/dashboard" && (
             <Link to="/dashboard" className={styles.link}>
               <LayoutDashboard size={18} style={{ marginRight: 4 }} />
               My Learning
@@ -99,7 +108,29 @@ const Navbar: React.FC = () => {
             onClick={() => setShowSignup(true)}
           >
             Join for Free
-          </button>
+          </button> */}
+          {!isLogin ? (
+  <>
+    <button
+      className={styles.joinBtn}
+      onClick={() => setShowLogin(true)}
+    >
+      Log In
+    </button>
+
+    <button
+      className={styles.joinBtn}
+      onClick={() => setShowSignup(true)}
+    >
+      Join for Free
+    </button>
+  </>
+) : (
+  <Link to="/dashboard" className={styles.link}>
+    <LayoutDashboard size={18} style={{ marginRight: 4 }} />
+    My Learning
+  </Link>
+)}
         </div>
       </nav>
 

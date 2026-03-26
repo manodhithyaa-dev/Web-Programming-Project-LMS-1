@@ -1,51 +1,59 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
-const course = {
-  title: "React Bootcamp",
-  author: "John Doe",
-  rating: 4.5,
-  students: 12000,
-  price: 999,
-  description:
-    "Learn React from scratch and build real-world projects.",
-  duration: "6 weeks",
-  level: "Beginner",
-  validity: "Lifetime access",
-  certificate: true,
-  image:
-    "https://images.unsplash.com/photo-1633356122544-f134324a6cee",
-  sections: [
-    {
-      title: "Introduction",
-      lessons: [
-        { name: "What is React?", preview: true },
-        { name: "Setup", preview: false },
-        { name: "First App", preview: false },
-      ],
-    },
-    {
-      title: "Core Concepts",
-      lessons: [
-        { name: "Components", preview: true },
-        { name: "Props", preview: false },
-        { name: "State", preview: false },
-      ],
-    },
-    {
-      title: "Advanced Topics",
-      lessons: [
-        { name: "Routing", preview: true },
-        { name: "Context API", preview: false },
-      ],
-    },
-  ],
-};
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 const CourseDetail = () => {
+  const [course, setCourse] = useState<any>(null);
+  const [sections, setSections] = useState<any[]>([]);
   const [wishlist, setWishlist] = useState(false);
   const [previewVideo, setPreviewVideo] = useState<string | null>(null);
+
   const navigate = useNavigate();
+  const { id } = useParams(); // 🔥 dynamic course id
+
+  useEffect(() => {
+    fetchCourse();
+  }, []);
+
+  const fetchCourse = async () => {
+    try {
+      // 1️⃣ Course details
+      const courseRes = await axios.get(
+        `http://localhost:5000/courses/${id}`
+      );
+
+      setCourse(courseRes.data);
+
+      // 2️⃣ Sections
+      const sectionRes = await axios.get(
+        `http://localhost:5000/courses/${id}/sections`
+      );
+
+      // 3️⃣ Topics for each section
+      const sectionsWithTopics = await Promise.all(
+        sectionRes.data.map(async (section: any) => {
+          const topicsRes = await axios.get(
+            `http://localhost:5000/sections/${section.section_id}/topics`
+          );
+
+          return {
+            title: section.section_title,
+            lessons: topicsRes.data.map((t: any) => ({
+              name: t.topic_title,
+              preview: t.is_preview,
+              video: t.video_url,
+            })),
+          };
+        })
+      );
+
+      setSections(sectionsWithTopics);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  if (!course) return <p className="text-center mt-5">Loading...</p>;
 
   return (
     <div className="container mt-4">
@@ -55,23 +63,23 @@ const CourseDetail = () => {
         {/* LEFT */}
         <div className="col-lg-8">
 
-          <h2>{course.title}</h2>
-          <p className="text-muted mb-2">By {course.author}</p>
+          <h2>{course.course_name}</h2>
+          <p className="text-muted mb-2">By {course.author_name}</p>
 
           <div className="d-flex gap-3 mb-2">
             <span>⭐ {course.rating}</span>
-            <span>{course.students} students</span>
             <span className="badge bg-success">{course.level}</span>
           </div>
 
           <p className="mb-4">{course.description}</p>
 
-          {/* 📚 SYLLABUS */}
+          {/* 📚 CONTENT */}
           <h4 className="mb-3">Course Content</h4>
 
           <div className="accordion" id="courseAccordion">
-            {course.sections.map((section, index) => (
+            {sections.map((section, index) => (
               <div key={index} className="accordion-item">
+
                 <h2 className="accordion-header">
                   <button
                     className={`accordion-button ${
@@ -94,21 +102,16 @@ const CourseDetail = () => {
                   <div className="accordion-body">
 
                     <ul className="list-group">
-                      {section.lessons.map((lesson, i) => (
+                      {section.lessons.map((lesson: any, i: number) => (
                         <li
                           key={i}
-                          className={`list-group-item d-flex justify-content-between align-items-center ${
-                            lesson.preview ? "cursor-pointer" : ""
-                          }`}
+                          className="list-group-item d-flex justify-content-between align-items-center"
                           style={{
                             cursor: lesson.preview ? "pointer" : "not-allowed",
                             opacity: lesson.preview ? 1 : 0.6,
                           }}
                           onClick={() =>
-                            lesson.preview &&
-                            setPreviewVideo(
-                              "https://www.youtube.com/embed/dGcsHMXbSOA"
-                            )
+                            lesson.preview && setPreviewVideo(lesson.video)
                           }
                         >
                           {lesson.name}
@@ -135,7 +138,10 @@ const CourseDetail = () => {
             className="card shadow-sm"
             style={{ position: "sticky", top: "100px" }}
           >
-            <img src={course.image} className="card-img-top" />
+            <img
+              src="https://images.unsplash.com/photo-1633356122544-f134324a6cee"
+              className="card-img-top"
+            />
 
             <div className="card-body">
               <h4>₹{course.price}</h4>
@@ -149,7 +155,10 @@ const CourseDetail = () => {
                 {wishlist ? "❤️ Wishlisted" : "♡ Add to Wishlist"}
               </button>
 
-              <button className="btn btn-success w-100 mb-2" onClick={() => navigate("/course/learn/101")}>
+              <button
+                className="btn btn-success w-100 mb-2"
+                onClick={() => navigate(`/course/learn/${id}`)}
+              >
                 Enroll Now
               </button>
 
@@ -157,8 +166,8 @@ const CourseDetail = () => {
 
               <ul className="list-unstyled mb-0">
                 <li>📅 {course.duration}</li>
-                <li>♾️ {course.validity}</li>
-                <li>🎓 Certificate Included</li>
+                <li>♾️ {course.access_duration}</li>
+                <li>🎓 {course.certificate ? "Certificate Included" : "No Certificate"}</li>
               </ul>
             </div>
           </div>
@@ -170,7 +179,6 @@ const CourseDetail = () => {
       {previewVideo && (
         <div
           className="modal fade show d-block"
-          tabIndex={-1}
           style={{ background: "rgba(0,0,0,0.7)" }}
           onClick={() => setPreviewVideo(null)}
         >

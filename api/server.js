@@ -1,14 +1,17 @@
 const express = require("express");
-const conn = require("./db"); // your connection file
+const cors = require("cors");
+const conn = require("./db");
 
 const app = express();
+
+app.use(cors());
 app.use(express.json());
 
 /* ============================
    AUTH APIs
 ============================ */
 
-// LOGIN (student or teacher)
+// LOGIN
 app.post("/login", (req, res) => {
     const { email, password } = req.body;
 
@@ -41,7 +44,7 @@ app.post("/register/student", (req, res) => {
     const sql = "INSERT INTO student (full_name, email, password) VALUES (?, ?, ?)";
     conn.query(sql, [full_name, email, password], (err, result) => {
         if (err) return res.status(500).send(err);
-        res.send("Student registered");
+        res.send({ message: "Student registered" });
     });
 });
 
@@ -56,19 +59,29 @@ app.post("/register/teacher", (req, res) => {
 
     conn.query(sql, [full_name, email, password, enterprise, years_of_experience], (err, result) => {
         if (err) return res.status(500).send(err);
-        res.send("Teacher registered");
+        res.send({ message: "Teacher registered" });
     });
 });
 
-
-
 /* ============================
-   COURSES APIs
+   COURSES APIs (FULL DATA)
 ============================ */
 
-// GET ALL COURSES
+// GET ALL COURSES WITH FULL DETAILS
 app.get("/courses", (req, res) => {
-    const sql = "SELECT * FROM courses";
+    const sql = `
+        SELECT 
+            c.course_id,
+            cd.course_name,
+            t.full_name AS author,
+            cd.rating,
+            cd.level,
+            cd.duration
+        FROM courses c
+        JOIN course_details cd ON c.course_id = cd.course_id
+        LEFT JOIN teacher t ON cd.author = t.teacher_id
+    `;
+
     conn.query(sql, (err, result) => {
         if (err) return res.status(500).send(err);
         res.send(result);
@@ -77,20 +90,26 @@ app.get("/courses", (req, res) => {
 
 // GET COURSE DETAILS
 app.get("/courses/:id", (req, res) => {
-    const sql = "SELECT * FROM course_details WHERE course_id=?";
+    const sql = `
+        SELECT 
+            cd.*,
+            t.full_name AS author_name
+        FROM course_details cd
+        LEFT JOIN teacher t ON cd.author = t.teacher_id
+        WHERE cd.course_id = ?
+    `;
+
     conn.query(sql, [req.params.id], (err, result) => {
         if (err) return res.status(500).send(err);
         res.send(result[0]);
     });
 });
 
-
-
 /* ============================
    COURSE CONTENT APIs
 ============================ */
 
-// GET SECTIONS OF A COURSE
+// GET SECTIONS
 app.get("/courses/:id/sections", (req, res) => {
     const sql = `
         SELECT s.* FROM sections s
@@ -104,7 +123,7 @@ app.get("/courses/:id/sections", (req, res) => {
     });
 });
 
-// GET TOPICS OF A SECTION
+// GET TOPICS
 app.get("/sections/:id/topics", (req, res) => {
     const sql = "SELECT * FROM topics WHERE section_id=?";
     conn.query(sql, [req.params.id], (err, result) => {
@@ -113,10 +132,8 @@ app.get("/sections/:id/topics", (req, res) => {
     });
 });
 
-
-
 /* ============================
-   CREATE COURSE (TEACHER)
+   CREATE COURSE
 ============================ */
 
 app.post("/courses", (req, res) => {
@@ -126,14 +143,13 @@ app.post("/courses", (req, res) => {
 
     conn.query(sql, [course_name], (err, result) => {
         if (err) return res.status(500).send(err);
+
         res.send({
             message: "Course created",
             course_id: result.insertId
         });
     });
 });
-
-
 
 /* ============================
    START SERVER
